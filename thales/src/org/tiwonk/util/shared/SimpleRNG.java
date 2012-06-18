@@ -284,7 +284,7 @@ public class SimpleRNG
  The derivative work was created June 18, 2012.  It modifies the original in the following 
  ways:
  
-   1. Translated from C# into Java.
+   1. Translated from C# into Java, which requires the use of the unsigned shift operator.
    2. Added method nextUID() which returns a random string suitable for use as an identifier.
    3. Automatically seeds the random number generator based on the system date.
    
