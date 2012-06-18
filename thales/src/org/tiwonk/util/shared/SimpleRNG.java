@@ -288,13 +288,5 @@ public class SimpleRNG
    2. Added method nextUID() which returns a random string suitable for use as an identifier.
    3. Automatically seeds the random number generator based on the system date.
    
- SimpleRNG is a simple random number generator based on 
- George Marsaglia's MWC (multiply with carry) generator.
- Although it is very simple, it passes Marsaglia's DIEHARD
- series of random number generator tests.
- 
- Written by John D. Cook 
- http://www.johndcook.com
- </summary>
  */
 
