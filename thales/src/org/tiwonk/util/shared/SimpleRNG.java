@@ -2,19 +2,21 @@ package org.tiwonk.util.shared;
 
 import java.util.Date;
 
-/// <summary>
-/// SimpleRNG is a simple random number generator based on 
-/// George Marsaglia's MWC (multiply with carry) generator.
-/// Although it is very simple, it passes Marsaglia's DIEHARD
-/// series of random number generator tests.
-/// 
-/// Written by John D. Cook 
-/// http://www.johndcook.com
-/// </summary>
 
 /**
+ * SimpleRNG is a simple random number generator based on 
+ * George Marsaglia's MWC (multiply with carry) generator.
+ * Although it is very simple, it passes Marsaglia's DIEHARD
+ * series of random number generator tests.
+ * <p>
  * A homegrown random number generator so that we can use the same code in both
  * GWT client and server.
+ * </p>
+ * <p>
+ * This class is based on 
+ * <a href="http://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation">open source code</a>
+ * from John Cook. * 
+ * </p>
  */
 public class SimpleRNG
 {
@@ -253,4 +255,46 @@ public class SimpleRNG
 //        return u / (u + v);
 //    }
 }
+
+
+/*
+  Copyright 2012 Gregory McFall
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+ 
+ */
+
+/*
+ This file is a derivative work adapted from source code written by John D. Cook
+ The original source code is available under Code Project Open License (CPOL) 1.02
+ from
+    http://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
+    
+ The derivative work was created June 18, 2012.  It modifies the original in the following 
+ ways:
+ 
+   1. Translated from C# into Java.
+   2. Added method nextUID() which returns a random string suitable for use as an identifier.
+   3. Automatically seeds the random number generator based on the system date.
+   
+ SimpleRNG is a simple random number generator based on 
+ George Marsaglia's MWC (multiply with carry) generator.
+ Although it is very simple, it passes Marsaglia's DIEHARD
+ series of random number generator tests.
+ 
+ Written by John D. Cook 
+ http://www.johndcook.com
+ </summary>
+ */
 
