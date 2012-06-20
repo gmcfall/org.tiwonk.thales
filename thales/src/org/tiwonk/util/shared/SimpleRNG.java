@@ -18,47 +18,47 @@ import java.util.Date;
  * from John Cook. * 
  * </p>
  */
-public class SimpleRNG
+public class SimpleRNG implements RandomGenerator
 {
-    private static int m_w;
-    private static int m_z;
-
-    static 
-    {
-        // These values are not magical, just the default values Marsaglia used.
-        // Any pair of unsigned integers should be fine.
-        m_w = 521288629;
-        m_z = 362436069;
-        
-        SetSeedFromSystemTime();
-    }
+    // These values are not magical, just the default values Marsaglia used.
+    // Any pair of unsigned integers should be fine.
+  
+    private  int m_w = 521288629;
+    private  int m_z = 362436069;
+    
 
     // The random generator seed can be set three ways:
     // 1) specifying two non-zero unsigned integers
     // 2) specifying one non-zero unsigned integer and taking a default value for the second
     // 3) setting the seed from the system time
 
-    public static void SetSeed(int u, int v)
+    public  SimpleRNG(int u, int v)
     {
-        if (u != 0) m_w = u; 
-        if (v != 0) m_z = v;
+      setSeed(u, v);
     }
 
-    public static void SetSeed(int u)
+    private void setSeed(int u, int v) {
+
+      if (u != 0) m_w = u; 
+      if (v != 0) m_z = v;
+      
+    }
+
+    public  SimpleRNG(int u)
     {
         m_w = u;
     }
 
-    public static void SetSeedFromSystemTime()
+    public SimpleRNG()
     {
         Date dt = new Date();
         long x = dt.getTime();
-        SetSeed((int)(x >>> 16), (int)(x % 4294967296L));
+        setSeed((int)(x >>> 16), (int)(x % 4294967296L));
     }
 
     // Produce a uniform random sample from the open interval (0, 1).
     // The method will not return either end point.
-    public static double nextDouble()
+    public  double nextDouble()
     {
         // 0 <= u < 2^32
         int u = nextInt();
@@ -70,7 +70,7 @@ public class SimpleRNG
     // This is the heart of the generator.
     // It uses George Marsaglia's MWC algorithm to produce an unsigned integer.
     // See http://www.bobwheeler.com/statistics/Password/MarsagliaPost.txt
-    public static int nextInt()
+    public  int nextInt()
     {
         m_z = 36969 * (m_z & 65535) + (m_z >>> 16);
         m_w = 18000 * (m_w & 65535) + (m_w >>> 16);
@@ -81,19 +81,14 @@ public class SimpleRNG
      * Returns the SHA-1 hash of a 64 random bits.
      * This value is suitable for use as a random unique identifier.
      */
-    public static String nextUID() {
+    public  String nextUID() {
       String value = Integer.toHexString(nextInt()) + Integer.toHexString(nextInt());
       return HashUtil.SHA1(value);
     }
     
-    public static void main(String[] args) {
-      for (int i=0; i<10; i++) {
-        System.out.println(nextUID());
-      }
-    }
 //    
 //    // Get normal (Gaussian) random sample with mean 0 and standard deviation 1
-//    public static double GetNormal()
+//    public  double GetNormal()
 //    {
 //        // Use Box-Muller algorithm
 //        double u1 = nextDouble();
@@ -104,7 +99,7 @@ public class SimpleRNG
 //    }
 //    
 //    // Get normal (Gaussian) random sample with specified mean and standard deviation
-//    public static double GetNormal(double mean, double standardDeviation)
+//    public  double GetNormal(double mean, double standardDeviation)
 //    {
 //        if (standardDeviation <= 0.0)
 //        {
@@ -115,13 +110,13 @@ public class SimpleRNG
 //    }
 //    
 //    // Get exponential random sample with mean 1
-//    public static double GetExponential()
+//    public  double GetExponential()
 //    {
 //        return -Math.log( nextDouble() );
 //    }
 //
 //    // Get exponential random sample with specified mean
-//    public static double GetExponential(double mean)
+//    public  double GetExponential(double mean)
 //    {
 //        if (mean <= 0.0)
 //        {
@@ -131,7 +126,7 @@ public class SimpleRNG
 //        return mean*GetExponential();
 //    }
 //
-//    public static double GetGamma(double shape, double scale)
+//    public  double GetGamma(double shape, double scale)
 //    {
 //        // Implementation based on "A Simple Method for Generating Gamma Variables"
 //        // by George Marsaglia and Wai Wan Tsang.  ACM Transactions on Mathematical Software
@@ -171,21 +166,21 @@ public class SimpleRNG
 //        }
 //    }
 //
-//    public static double GetChiSquare(double degreesOfFreedom)
+//    public  double GetChiSquare(double degreesOfFreedom)
 //    {
 //        // A chi squared distribution with n degrees of freedom
 //        // is a gamma distribution with shape n/2 and scale 2.
 //        return GetGamma(0.5 * degreesOfFreedom, 2.0);
 //    }
 //
-//    public static double GetInverseGamma(double shape, double scale)
+//    public  double GetInverseGamma(double shape, double scale)
 //    {
 //        // If X is gamma(shape, scale) then
 //        // 1/Y is inverse gamma(shape, 1/scale)
 //        return 1.0 / GetGamma(shape, 1.0 / scale);
 //    }
 //
-//    public static double GetWeibull(double shape, double scale)
+//    public  double GetWeibull(double shape, double scale)
 //    {
 //        if (shape <= 0.0 || scale <= 0.0)
 //        {
@@ -195,7 +190,7 @@ public class SimpleRNG
 //        return scale * Math.pow(-Math.log(nextDouble()), 1.0 / shape);
 //    }
 //
-//    public static double GetCauchy(double median, double scale)
+//    public  double GetCauchy(double median, double scale)
 //    {
 //        if (scale <= 0)
 //        {
@@ -209,7 +204,7 @@ public class SimpleRNG
 //        return median + scale*Math.tan(Math.PI*(p - 0.5));
 //    }
 //
-//    public static double GetStudentT(double degreesOfFreedom)
+//    public  double GetStudentT(double degreesOfFreedom)
 //    {
 //        if (degreesOfFreedom <= 0)
 //        {
@@ -224,7 +219,7 @@ public class SimpleRNG
 //    }
 //
 //    // The Laplace distribution is also known as the double exponential distribution.
-//    public static double GetLaplace(double mean, double scale)
+//    public  double GetLaplace(double mean, double scale)
 //    {
 //        double u = nextDouble();
 //        return (u < 0.5) ?
@@ -232,12 +227,12 @@ public class SimpleRNG
 //            mean - scale*Math.log(2*(1-u));
 //    }
 //
-//    public static double GetLogNormal(double mu, double sigma)
+//    public  double GetLogNormal(double mu, double sigma)
 //    {
 //        return Math.exp(GetNormal(mu, sigma));
 //    }
 //
-//    public static double GetBeta(double a, double b)
+//    public  double GetBeta(double a, double b)
 //    {
 //        if (a <= 0.0 || b <= 0.0)
 //        {
@@ -254,6 +249,32 @@ public class SimpleRNG
 //        double v = GetGamma(b, 1.0);
 //        return u / (u + v);
 //    }
+
+    @Override
+    public int nextInt(int limit) {
+      int result = (int)(nextDouble() * (limit+1));
+      if (result > limit) {
+        result = limit;
+      }
+      return result;
+    }
+
+    @Override
+    public String nextString(int length) {
+      StringBuilder builder = new StringBuilder(length);
+      
+      while (builder.length() < length) {
+        builder.append(Integer.toHexString(nextInt()));
+      }
+
+      String value = builder.toString();
+      return value.substring(0, length);
+    }
+
+    @Override
+    public String nextUid() {
+      return nextString(32);
+    }
 }
 
 
@@ -287,6 +308,9 @@ public class SimpleRNG
    1. Translated from C# into Java, which requires the use of the unsigned shift operator.
    2. Added method nextUID() which returns a random string suitable for use as an identifier.
    3. Automatically seeds the random number generator based on the system date.
+   4. Removed static qualifiers so that different instances can have different seed values.
+   5. Replaced methods for setting the seed values with constructors.
+   6. Implements the RandomGenerator interface to provide an additional layer of abstraction.
    
  */
 

@@ -1,18 +1,15 @@
 package org.tiwonk.util.shared;
 
 
+/**
+*
+*  Secure Hash Algorithm (SHA1)
+*  
+*  Adapted from
+*  http://www.webtoolkit.info/javascript-sha1.html
+*
+**/
 public class HashUtil {
-   
-  
-  /**
-  *
-  *  Secure Hash Algorithm (SHA1)
-  *  
-  *  Adapted from
-  *  http://www.webtoolkit.info/javascript-sha1.html
-  *
-  **/
-   
 
   static private int rotate_left(int n, int s) {
     int t4 = ( n<<s ) | (n>>>(32-s));
