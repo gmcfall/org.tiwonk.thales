@@ -3,6 +3,7 @@ package org.tiwonk.util.client.ui.impl;
 import org.tiwonk.util.client.ui.StatusMessageView;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -37,7 +38,7 @@ public class StatusMessageImpl extends Composite implements StatusMessageView {
   }
 
   @Override
-  public void display(String message) {
+  public void show(String message) {
     label.setText(message);
     label.getElement().getStyle().setOpacity(1);
     panel.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -73,6 +74,14 @@ public class StatusMessageImpl extends Composite implements StatusMessageView {
         schedule(FADE_RATE);
       }
       
+    }
+    
+  }
+
+  @Override
+  public void ensureInjected() {
+    if (getElement().getParentElement() == null) {
+      Document.get().getBody().appendChild(getElement());
     }
     
   }
