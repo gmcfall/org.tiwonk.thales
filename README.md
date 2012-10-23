@@ -25,3 +25,6 @@ This repository relies on the following open source software:
    
    Javascript SHA-1 (Copyright © 2012 webtoolkit.com, Creative Commons 2.0 UK)
    http://www.webtoolkit.info/javascript-sha1.html
+
+   GWT (Google Inc., Apache 2.0) 
+   https://developers.google.com/web-toolkit/terms
